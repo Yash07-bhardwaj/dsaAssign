@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+
+bool isSubstring(const string& str, const string& sub) {
+    int n = str.size();
+    int m = sub.size();
+
+    for (int i = 0; i <= n - m; i++) {
+        bool match = true;
+        for (int j = 0; j < m; j++) {
+            if (str[i + j] != sub[j]) {
+                match = false;
+                break;
+            }
+        }
+        if (match) return true;
+    }
+    return false;
+}
+
+bool canSplit(string s) {
+    int n = s.size();
+    for (int i = 1; i < n - 1; i++) {
+        for (int j = i + 1; j < n; j++) {
+            string A = s.substr(0, i);
+            string B = s.substr(i, j - i);
+            string C = s.substr(j);
+
+            if (isSubstring(A, B) && isSubstring(C, B)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+int main() {
+    string s;
+    cin >> s;
+
+    if (canSplit(s))
+        cout << "YES\n";
+    else
+        cout << "NO\n";
+
+    return 0;
+}
